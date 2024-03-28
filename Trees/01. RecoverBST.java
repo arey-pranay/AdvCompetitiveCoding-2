@@ -1,55 +1,63 @@
 class TreeNode {
-int val;
-TreeNode left;
-TreeNode right;
-TreeNode(int val) {
-this.val = val;
+    int val;
+    TreeNode left;
+    TreeNode right;
+
+    public TreeNode(int val) {
+        this.val = val;
+        left = null;
+        right = null;
+    }
 }
-}
-public class Main {
-TreeNode firstIncorrectNode = null;
-TreeNode secondIncorrectNode = null;
-TreeNode prevNode = new
-TreeNode(Integer.MIN_VALUE);
-public void recoverTree(TreeNode root) {
-// Perform inorder traversal
-inorder(root);
-// Swap the values of the two incorrectly placed nodes
-int temp = firstIncorrectNode.val;
-firstIncorrectNode.val = secondIncorrectNode.val;
-secondIncorrectNode.val = temp;
-}
-private void inorder(TreeNode node)
-{
-if (node == null) return;
-inorder(node.left);
-// Check for incorrectly placed nodes
-if (firstIncorrectNode == null && prevNode.val >= node.val) {
-firstIncorrectNode = prevNode;
-}
-if (firstIncorrectNode != null && prevNode.val >= node.val) {
-secondIncorrectNode = node;
-}
-prevNode = node;
-inorder(node.right);
-}
-public static void main(String[] args) {
-// Create a sample binary search tree with incorrect nodes
-TreeNode root = new TreeNode(3);
-root.left = new TreeNode(1);
-root.right = new TreeNode(4);
-root.right.left = new TreeNode(2);
-Main solution = new Main();
-solution.recoverTree(root);
-// Print the corrected BST
-System.out.println("Inorder Traversal of Recovered BST:");
-printInorder(root);
-}
-// Helper function to print the inorder traversal of a tree
-private static void printInorder(TreeNode node) {
-if (node == null) return;
-printInorder(node.left);
-System.out.print(node.val + " ");
-printInorder(node.right);
-}
+
+public class MorrisTraversalBSTRecovery {
+    public static void recoverBST(TreeNode root) {
+        TreeNode current = root;
+
+        while (current != null) {
+            if (current.left == null) {
+                // Process current node here (for example, print its value)
+                System.out.print(current.val + " ");
+
+                // Move to the right child
+                current = current.right;
+            } else {
+                // Find the predecessor of current node
+                TreeNode predecessor = current.left;
+                while (predecessor.right != null && predecessor.right != current) {
+                    predecessor = predecessor.right;
+                }
+
+                if (predecessor.right == null) {
+                    // Make predecessor point to current node
+                    predecessor.right = current;
+                    current = current.left;
+                } else {
+                    // Revert the change made to predecessor
+                    predecessor.right = null;
+
+                    // Process current node here (for example, print its value)
+                    System.out.print(current.val + " ");
+
+                    // Move to the right child
+                    current = current.right;
+                }
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        // Construct the BST
+        TreeNode root = new TreeNode(4);
+        root.left = new TreeNode(2);
+        root.right = new TreeNode(6);
+        root.left.left = new TreeNode(1);
+        root.left.right = new TreeNode(3);
+        root.right.left = new TreeNode(5);
+        root.right.right = new TreeNode(7);
+
+        // Recover the structure of the BST using Morris Traversal
+        System.out.println("Recovered BST structure:");
+        recoverBST(root);
+    }
 }
