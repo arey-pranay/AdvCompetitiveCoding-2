@@ -1,7 +1,4 @@
-import java.util.Scanner;
-import java.util.Arrays;
-import java.util.NoSuchElementException;
-
+import java.util.*;
 class DaryHeap {
     private int d;
     private int heapSize;
