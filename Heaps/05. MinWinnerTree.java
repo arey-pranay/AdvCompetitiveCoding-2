@@ -1,5 +1,4 @@
 import java.util.Arrays;
-
 public class MinWinnerTree {
     private int[] tree;
     private int[] players;
