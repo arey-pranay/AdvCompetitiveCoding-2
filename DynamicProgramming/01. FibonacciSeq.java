@@ -1,4 +1,5 @@
 public class Fibonacci {
+
 public static int fibonacciBottomUp(int n) {
 if (n <= 1) {
 return n;
