@@ -1,5 +1,4 @@
 import java.util.*;
-
 // Definition of a binary tree node
 class TreeNode {
     int val;
@@ -10,7 +9,6 @@ class TreeNode {
         left = right = null;
     }
 }
-
 public class BinaryTreeViews {
 
     // Function to print the top view of the binary tree
